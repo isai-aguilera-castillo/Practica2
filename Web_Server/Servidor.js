@@ -37,7 +37,7 @@ fs. readFile(filePath,function(error, content){
 
         else{
             response.writeHead(500);
-            response.end('sorry, check with the site admi for error: '+error.code)
+            response.end('sorry, check with the site admi for error: '+error.code+'..\n')
             response.end();
         }
     }
