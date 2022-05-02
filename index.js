@@ -1,7 +1,7 @@
 // llamamos el modulo http 
 const http=require ('http');
 // establecemos la url o IP de buestro servidor 
-const hostname = '192.168.0.17';
+const hostname = '192.168.0.7';
 // establecemos el puerto de escucha
 const port = 3000;
 

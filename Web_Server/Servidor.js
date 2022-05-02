@@ -23,6 +23,7 @@ var mimeTypes = {
     '.jpg' : 'image/jpg',
 };
 
+contentType = mineTypes[extname]||'application/octet-stream';
 
 fs. readFile(filePath,function(error, content){
     if (error){
@@ -45,7 +46,7 @@ fs. readFile(filePath,function(error, content){
         response.end(content, 'utf-8');
         
     }
+});
+
 }).listen(3000);
 console.log('Server running at http://127.0.0.1:3000/');
-
-})
