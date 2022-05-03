@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+
+    <title>Calendario de programacion WEB</title> 
+    
+</head>
+
+ <head>
+   <title> nombre almuno </title>
+ </head>
+<body> 
+  
+  <h2>
+    <center>
+    <Font face="Arial" >ISAI ARON AGUILERA CASTILLO Nc. 18540510 </Font> 
+</center>
+  </h2>
+
+</body> 
+
+<body>
+
+<h1 class="title">Calendario de programación WEB 7°B </h1>
+
+<div class="calendar">
+    <div class="calendar__info">
+        <div class="calendar__prev" id="prev-month">&#9664;</div>
+        <div class="calendar__month" id="month"></div>
+        <div class="calendar__year" id="year"></div>
+        <div class="calendar__next" id="next-month">&#9654;</div>
+    </div>
+
+    <div class="calendar__week">
+        <div class="calendar__day calendar__item"> <font face ="Arial Black">Lunes</font></div>  
+        <div class="calendar__day calendar__item"><font face="Arial Black">Martes</font></div>
+        <div class="calendar__day calendar__item"><font face="Arial Black">Miercoles</font></div>
+        <div class="calendar__day calendar__item"><font face="Arial Black">Jueves</font></div>
+        <div class="calendar__day calendar__item"><font face="Arial Black">Viernes</font></div>
+        <div class="calendar__day calendar__item"><font face="Arial Black">Sabado</font></div>
+        <div class="calendar__day calendar__item"> <font face="Arial Black">Domingo</font></div>
+    </div>
+
+    <div class="calendar__dates" id="dates"></div>
+</div>
+
+
+<!--******************************************* Comienso del javaSc *********************************************-->
+<script>
+
+let monthNames = [ 'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 
+'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE','OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE']; 
+let currentDate = new Date();
+let currentDay = currentDate.getDate();
+let monthNumber = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
+
+let dates = document.getElementById('dates');
+let month = document.getElementById('month');
+let year = document.getElementById('year');
+
+let prevMonthDOM = document.getElementById('prev-month');
+let nextMonthDOM = document.getElementById('next-month');
+
+month.textContent = monthNames[monthNumber];
+year.textContent = currentYear.toString();
+
+prevMonthDOM.addEventListener('click', ()=>lastMonth());
+nextMonthDOM.addEventListener('click', ()=>nextMonth());
+
+
+
+const writeMonth = (month) => {
+
+    for(let i = startDay(); i>0;i--){
+        dates.innerHTML += ` <div class="calendar__date calendar__item calendar__last-days">
+            ${getTotalDays(monthNumber-1)-(i-1)}
+        </div>`;
+    }
+
+    for(let i=1; i<=getTotalDays(month); i++){
+        if(i===currentDay) {
+            dates.innerHTML += ` <div class="calendar__date calendar__item calendar__today">${i}</div>`;
+        }else{
+            dates.innerHTML += ` <div class="calendar__date calendar__item">${i}</div>`;
+        }
+    }
+}
+/* comparacion si los meses tienen 30, 31 o entre 28 y 29 dias dependiendo el año */
+const getTotalDays = month => {
+    if(month === -1) month = 11;
+
+    if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9 || month == 11) {
+        return  31;
+
+    } else if (month == 3 || month == 5 || month == 8 || month == 10) {
+        return 30;
+
+    } else {
+
+        return isLeap() ? 29:28;
+    }
+}
+
+const isLeap = () => {
+    return ((currentYear % 100 !==0) && (currentYear % 4 === 0) || (currentYear % 400 === 0));
+}
+
+const startDay = () => {
+    let start = new Date(currentYear, monthNumber, 1);
+    return ((start.getDay()-1) === -1) ? 6 : start.getDay()-1;
+}
+
+const lastMonth = () => {
+    if(monthNumber !== 0){
+        monthNumber--;
+    }else{
+        monthNumber = 11;
+        currentYear--;
+    }
+
+    setNewDate();
+}
+
+const nextMonth = () => {
+    if(monthNumber !== 11){
+        monthNumber++;
+    }else{
+        monthNumber = 0;
+        currentYear++;
+    }
+
+    setNewDate();
+}
+
+const setNewDate = () => {
+    currentDate.setFullYear(currentYear,monthNumber,currentDay);
+    month.textContent = monthNames[monthNumber];
+    year.textContent = currentYear.toString();
+    dates.textContent = '';
+    writeMonth(monthNumber);
+}
+
+writeMonth(monthNumber);
+</script>
+
+
+
+<!-- Final del JavaSc y el comienso de css-->
+          <!-- **************************************************************************    -->          
+          <style>
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+/*  difuminacion de colores del fondo */
+  
+body {
+  background: -webkit-gradient(linear, left top, right top, from(rgb(240, 216, 236)), to(rgb(233, 81, 54)));
+  background: -webkit-linear-gradient(left, rgb(18, 36, 201), rgb(233, 54, 179));
+  background: -o-linear-gradient(left, rgb(23, 33, 172), rgb(203, 54, 233));
+  background: linear-gradient(to right, rgb(0, 24, 133)e, rgb(233, 81, 54)); }
+
+.title {
+  text-align: center;
+  color: rgb(0, 0, 0); }
+
+.calendar {
+  background: #5e5d5c;
+  width: 85%;
+  max-width: 700px;
+  margin: 1em auto;
+  padding: .5em 0; }
+  .calendar__info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 2em;
+    font-size: 1.2em;
+    text-transform: uppercase; }
+  .calendar__prev, .calendar__next {
+    color: #7372c5;
+    cursor: pointer;
+    font-size: 1.4em; }
+  .calendar__prev {
+    margin-right: auto; }
+  .calendar__next {
+    margin-left: auto; }
+  .calendar__week, .calendar__dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 10px; }
+  .calendar__month, .calendar__year {
+    
+    padding: .5em 1em; }
+  .calendar__item {
+    text-align: center;
+    line-height: 2; }
+  .calendar__today {
+    background: rgb(30, 45, 179);
+    color: rgb(255, 251, 251);
+    width: 50%;
+    border-radius: 50%;
+    margin: auto; }
+  .calendar__last-days {
+    opacity: .3; }
+
+</style>
+
+</body>
+</html>
